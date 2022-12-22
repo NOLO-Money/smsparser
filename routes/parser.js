@@ -34,7 +34,9 @@ const parse = function (request) {
         || message_lower.includes("due")
         || message_lower.includes("renew")
         || message_lower.includes("request")
-        || message_lower.includes("requested")) {
+        || message_lower.includes("requested")
+        || message_lower.includes("card")
+        || message_lower.includes("creditcard")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
     }
