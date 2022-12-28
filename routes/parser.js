@@ -4,29 +4,51 @@ function hasNumber(myString) {
     return /\d/.test(myString);
 }
 
-const parse = function (request) {
-    let message = request.message;
-    let transactionInfo = parser.getTransactionInfo(message);
-    if (transactionInfo.account.number == null) {
-        let split = message.split(" ");
-        for (i = 0; i < split.length; i++) {
-            if (transactionInfo["accountNumber"] != null) {
-                break;
-            }
+function cleanAccountNumber(transactionInfo) {
+    let j = 4;
+    while (j-- > 0) {
+        transactionInfo.account.number = transactionInfo.account.number.toLowerCase()
+            .replace("x", "")
+            .replace("*", "");
+    }
+}
+
+function extractAccountNumber(split, transactionInfo) {
+    for (i = 0; i < split.length; i++) {
+        if (split[i].toLowerCase().startsWith("x") || split[i].toLowerCase().startsWith("*")) {
+            transactionInfo["accountNumber"] = split[i];
+            cleanAccountNumber(transactionInfo);
+            break;
+        }
+    }
+}
+
+function populateAccountNumber(split, transactionInfo) {
+    for (i = 0; i < split.length; i++) {
+        if (transactionInfo["accountNumber"] == null) {
             let case1 = split[i].length > 0;
             let case2 = split[i].toLowerCase().includes("x");
             let case3 = split[i].toLowerCase().includes("*");
             let case4 = hasNumber(split[i]);
             if ((case1 && case4) && (case2 || case3)) {
-                let j = 4;
                 transactionInfo.account.number = split[i]
-                while (j-- > 0) {
-                    transactionInfo.account.number = transactionInfo.account.number.toLowerCase()
-                        .replace("x", "")
-                        .replace("*", "");
-                }
             }
+        } else {
+            break;
         }
+    }
+}
+
+const parse = function (request) {
+    let message = request.message;
+    let transactionInfo = parser.getTransactionInfo(message);
+    if (transactionInfo.account.number == null) {
+        let split = message.split(" ");
+
+        //Tries to extract account number from the message.
+        extractAccountNumber(split, transactionInfo);
+        // Populates the account number if extract failed.
+        populateAccountNumber(split, transactionInfo);
     }
     let message_lower = message.toLowerCase();
     if (message_lower.includes("cancel")
