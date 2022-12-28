@@ -5,18 +5,21 @@ function hasNumber(myString) {
 }
 
 function cleanAccountNumber(transactionInfo) {
-    let j = 4;
-    while (j-- > 0) {
-        transactionInfo.account.number = transactionInfo.account.number.toLowerCase()
-            .replace("x", "")
-            .replace("*", "");
+    if(transactionInfo &&  transactionInfo.account && transactionInfo.account.number) {
+        let j = 4;
+        while (j-- > 0) {
+            transactionInfo.account.number = transactionInfo.account.number.toLowerCase()
+                .replace("x", "")
+                .replace("*", "");
+        }
     }
 }
 
 function extractAccountNumber(split, transactionInfo) {
     for (i = 0; i < split.length; i++) {
         if (split[i].toLowerCase().startsWith("x") || split[i].toLowerCase().startsWith("*")) {
-            transactionInfo["accountNumber"] = split[i];
+            transactionInfo["account"] = {}
+            transactionInfo["number"] = split[i];
             cleanAccountNumber(transactionInfo);
             break;
         }
@@ -25,7 +28,8 @@ function extractAccountNumber(split, transactionInfo) {
 
 function populateAccountNumber(split, transactionInfo) {
     for (i = 0; i < split.length; i++) {
-        if (transactionInfo["accountNumber"] == null) {
+        if (transactionInfo.account == null || transactionInfo.account.number == null) {
+            transactionInfo.account = {}
             let case1 = split[i].length > 0;
             let case2 = split[i].toLowerCase().includes("x");
             let case3 = split[i].toLowerCase().includes("*");
