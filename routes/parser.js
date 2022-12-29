@@ -19,7 +19,7 @@ function extractAccountNumber(split, transactionInfo) {
     for (i = 0; i < split.length; i++) {
         if (split[i].toLowerCase().startsWith("x") || split[i].toLowerCase().startsWith("*")) {
             transactionInfo["account"] = {}
-            transactionInfo["number"] = split[i];
+            transactionInfo.account.number = split[i];
             cleanAccountNumber(transactionInfo);
             break;
         }
