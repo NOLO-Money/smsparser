@@ -67,6 +67,10 @@ const parse = function (request) {
         transactionInfo["transactionType"] = "invalid"
     }
 
+    if(transactionInfo.account.number && transactionInfo.balance){
+        transactionInfo["transactionType"] = "balance";
+    }
+
     transactionInfo["accountNumber"] = transactionInfo.account.number;
     if (transactionInfo.accountNumber) {
         transactionInfo.accountNumber = transactionInfo.accountNumber.replace(/\D/g,'');
