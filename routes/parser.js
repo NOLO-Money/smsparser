@@ -64,7 +64,8 @@ const parse = function (request) {
         || message_lower.includes("card")
         || message_lower.includes("creditcard")
         || message_lower.includes("mandate")
-        || message_lower.includes("autopay")) {
+        || message_lower.includes("autopay")
+        || message_lower.includes("fastag")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
     } else if (transactionInfo.account.number && transactionInfo.balance) {
