@@ -5,7 +5,7 @@ function hasNumber(myString) {
 }
 
 function cleanAccountNumber(transactionInfo) {
-    if(transactionInfo &&  transactionInfo.account && transactionInfo.account.number) {
+    if (transactionInfo && transactionInfo.account && transactionInfo.account.number) {
         let j = 4;
         while (j-- > 0) {
             transactionInfo.account.number = transactionInfo.account.number.toLowerCase()
@@ -62,16 +62,18 @@ const parse = function (request) {
         || message_lower.includes("request")
         || message_lower.includes("requested")
         || message_lower.includes("card")
-        || message_lower.includes("creditcard")) {
+        || message_lower.includes("creditcard")
+        || message_lower.includes("mandate")
+        || message_lower.includes("autopay")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
-    }else if(transactionInfo.account.number && transactionInfo.balance){
+    } else if (transactionInfo.account.number && transactionInfo.balance) {
         transactionInfo["transactionType"] = "balance";
     }
 
     transactionInfo["accountNumber"] = transactionInfo.account.number;
     if (transactionInfo.accountNumber) {
-        transactionInfo.accountNumber = transactionInfo.accountNumber.replace(/\D/g,'');
+        transactionInfo.accountNumber = transactionInfo.accountNumber.replace(/\D/g, '');
     }
     transactionInfo["balance"] = transactionInfo.balance.available ? transactionInfo.balance.available : null;
     delete transactionInfo.account;
