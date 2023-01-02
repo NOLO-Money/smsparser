@@ -68,7 +68,7 @@ const parse = function (request) {
         || message_lower.includes("fastag")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
-    } else if (transactionInfo.account.number && transactionInfo.balance) {
+    } else if (transactionInfo.account.number && transactionInfo.balance && transactionInfo.transactionType == null) {
         transactionInfo["transactionType"] = "balance";
     }
 
