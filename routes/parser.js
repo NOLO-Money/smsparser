@@ -61,7 +61,7 @@ const parse = function (request) {
         || message_lower.includes("renew")
         || message_lower.includes("request")
         || message_lower.includes("requested")
-        || message_lower.includes("credit card")
+        || message_lower.includes("card")
         || message_lower.includes("creditcard")
         || message_lower.includes("mandate")
         || message_lower.includes("autopay")
