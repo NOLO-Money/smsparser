@@ -75,6 +75,7 @@ const parse = function (request) {
     transactionInfo["accountNumber"] = transactionInfo.account.number;
     if (transactionInfo.accountNumber) {
         transactionInfo.accountNumber = transactionInfo.accountNumber.replace(/\D/g, '');
+        transactionInfo.accountNumber = transactionInfo.accountNumber.slice(-3);
     }
     transactionInfo["balance"] = transactionInfo.balance.available ? transactionInfo.balance.available : null;
     delete transactionInfo.account;
