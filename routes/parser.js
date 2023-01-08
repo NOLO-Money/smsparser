@@ -69,7 +69,7 @@ const parse = function (request) {
         || message_lower.includes("sbi upi user")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
-    } else if (transactionInfo.account.number && transactionInfo.balance && transactionInfo.transactionType == null) {
+    } else if (transactionInfo.account.number && transactionInfo.balance) {
         transactionInfo["transactionType"] = "balance";
     }
 
