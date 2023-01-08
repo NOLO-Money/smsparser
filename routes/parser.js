@@ -66,6 +66,7 @@ const parse = function (request) {
         || message_lower.includes("mandate")
         || message_lower.includes("autopay")
         || message_lower.includes("fastag")
+        || message_lower.includes("beneficiary")
         || message_lower.includes("sbi upi user")) {
         transactionInfo["transactionAmount"] = 0
         transactionInfo["transactionType"] = "invalid"
